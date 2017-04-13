@@ -1,0 +1,28 @@
+#ifndef FILETABLE_H
+#define FILETABLE_H
+#include <QString>
+#include <QDir>
+#include <QFile>
+#include "datamanage.h"
+#include "datatable.h"
+#include "resultstable.h"
+
+class fileTable
+{
+public:
+    fileTable();
+    dataManage *DB;
+    dataTable *dTable;
+    resultsTable *rTable;
+    QString lRow;
+    QString lRank;
+    QString filterWord;
+    QMap<QString,QString> keyWord;
+
+public:
+    void find_file(QString,QString,QString,QString,QMap<QString,QString>);
+    void check_dir(QDir);
+
+};
+
+#endif // FILETABLE_H

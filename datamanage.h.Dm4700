@@ -1,0 +1,27 @@
+#ifndef DATAMANAGE_H
+#define DATAMANAGE_H
+
+#include <QString>
+#include <QMessageBox>
+//#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlDriver>
+#include <QSqlQuery>
+#include <QDebug>
+
+class dataManage
+{
+public:
+    dataManage();
+    QSqlDatabase dataBase;
+    QSqlQuery sql_query;
+
+public:
+    void initializeDB();
+    void createTable(QString,QString);
+    void insertData(QString,QString);
+    void selectData(QString, QString);
+
+};
+
+#endif // DATAMANAGE_H
