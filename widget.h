@@ -18,7 +18,7 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QHideEvent>
-
+#pragma execution_character_set("utf-8")
 
 namespace Ui {
 class Widget;

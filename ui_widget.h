@@ -225,7 +225,7 @@ public:
         label_3->setText(QApplication::translate("Widget", "\345\214\271\351\205\215\345\205\263\351\224\256\345\255\227\357\274\232", Q_NULLPTR));
         label_4->setText(QApplication::translate("Widget", "\350\241\214\346\240\207\350\257\206    \357\274\232", Q_NULLPTR));
         label_5->setText(QApplication::translate("Widget", "\345\210\227\346\240\207\350\257\206    \357\274\232", Q_NULLPTR));
-        lineEdit->setText(QApplication::translate("Widget", "I:\\testfile", Q_NULLPTR));
+        lineEdit->setText(QString());
         pushButton->setText(QApplication::translate("Widget", "\347\241\256\345\256\232", Q_NULLPTR));
         label_6->setText(QApplication::translate("Widget", "\346\263\250\357\274\232\350\276\223\345\205\245\346\226\207\344\273\266\345\244\271\350\267\257\345\276\204", Q_NULLPTR));
         label_7->setText(QApplication::translate("Widget", "\346\263\250\357\274\232\350\276\223\345\205\245\350\277\207\346\273\244\345\255\227\346\256\265", Q_NULLPTR));
@@ -233,7 +233,7 @@ public:
         pushButton_3->setText(QApplication::translate("Widget", "\350\277\236\346\216\245", Q_NULLPTR));
         pushButton_5->setText(QApplication::translate("Widget", "\347\231\273\345\275\225", Q_NULLPTR));
         pushButton_4->setText(QApplication::translate("Widget", "\346\226\255\345\274\200\350\277\236\346\216\245", Q_NULLPTR));
-        lineEdit_5->setText(QApplication::translate("Widget", "127.0.0.1", Q_NULLPTR));
+        lineEdit_5->setText(QString());
         label_11->setText(QApplication::translate("Widget", "\346\234\215\345\212\241\345\231\250\345\234\260\345\235\200\357\274\232", Q_NULLPTR));
         label_9->setText(QApplication::translate("Widget", "\346\211\253\346\217\217\345\221\250\346\234\237  \357\274\232", Q_NULLPTR));
         label_10->setText(QApplication::translate("Widget", "\347\247\222", Q_NULLPTR));

@@ -9,8 +9,10 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)  // ,tcpSocket(this),//uploadThread(&dataDB, &tcpSocket, &Addrs)
 {
     ui->setupUi(this);
-    setWindowTitle("DATACOLLETION");
-    QIcon icon("images/icon.png");
+
+    setWindowTitle(tr("数据采集上传程序"));
+
+    QIcon icon(":/images/icon.png");
     setWindowIcon(icon);
     initializeIcon(icon);
 
@@ -56,6 +58,7 @@ Widget::Widget(QWidget *parent) :
     uploadThread = NULL;
     tcpSocket =  new QTcpSocket(this);
     flag = false;
+
 }
 
 Widget::~Widget()
@@ -89,7 +92,7 @@ void Widget::connectIP()
 
     if(IP == NULL)
     {
-        QMessageBox::warning(NULL,"Reminder","No ip!",QMessageBox::No);
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置ip!"),QMessageBox::No);
         return;
     }
 
@@ -103,7 +106,7 @@ void Widget::connectIP()
 
     if(!tcpSocket->waitForConnected(5000))
     {
-        QMessageBox::warning(NULL,"Reminder","No link this ip!" + tcpSocket->errorString(),QMessageBox::No);
+        QMessageBox::warning(NULL,tr("警告"),tr("没有连上这个ip!")  + tcpSocket->errorString(),QMessageBox::No);
         return;
     }
 
@@ -184,7 +187,7 @@ void Widget::setStart()
 
     if(setTime.isEmpty())
     {
-        QMessageBox::warning(NULL,tr("reminder"),tr("No set timer,stop!"));
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置定时时间!"));
         return;
     }
 
@@ -199,7 +202,7 @@ void Widget::setStart()
     }
     else
     {
-        QMessageBox::warning(NULL,tr("reminder"),"path isempty,stop！");
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置文件路径！"));
         return;
     }
 
@@ -220,7 +223,7 @@ void Widget::setEnter()
 
     if(path.isEmpty())
     {
-        QMessageBox::warning(NULL,tr("Reminder"),"Please input path");
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置文件路径！"));
         path.clear();
         keyWord.clear();
         filterWord.clear();
@@ -231,7 +234,7 @@ void Widget::setEnter()
 
     if(filterWord.isEmpty())
     {
-        QMessageBox::warning(NULL,tr("Reminder"),"Please input filterword!");
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置过滤字段!"));
         //qDebug()<<"请输过滤字段!";
         path.clear();
         keyWord.clear();
@@ -244,7 +247,7 @@ void Widget::setEnter()
     if(keyWord.isEmpty())
     {
 
-        QMessageBox::warning(NULL,tr("Reminder"),"No keyword!");
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置关键字!"));
         path.clear();
         keyWord.clear();
         filterWord.clear();
@@ -257,7 +260,7 @@ void Widget::setEnter()
 
     if(lRow.isEmpty())
     {
-        QMessageBox::warning(NULL,tr("Reminder"),"Please input row sign!");
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置行标识!"));
         path.clear();
         keyWord.clear();
         filterWord.clear();
@@ -268,7 +271,7 @@ void Widget::setEnter()
 
     if(lRank.isEmpty())
     {
-        QMessageBox::warning(NULL,tr("Reminder")," Please input rank sign!");
+        QMessageBox::warning(NULL,tr("警告"),tr("请先设置列标识!"));
         path.clear();
         keyWord.clear();
         filterWord.clear();
@@ -327,16 +330,16 @@ void Widget::initializeIcon(QIcon icon)
 {
     systemTray = new QSystemTrayIcon(this);
     systemTray->setIcon(icon);
-    systemTray->setToolTip("datacolletion");
+    systemTray->setToolTip(tr("数据采集上传程序"));
 
-    minimumAct = new QAction("Minimum Window", this);
+    minimumAct = new QAction(tr("最小化窗口"), this);
     //Note the differences between hide() and showMinimized().
     connect(minimumAct, SIGNAL(triggered()), this, SLOT(hide()));
-    maximumAct = new QAction("Maximum Window", this);
+    maximumAct = new QAction(tr("最大化窗口"), this);
     connect(maximumAct, SIGNAL(triggered()), this, SLOT(showMaximized()));
-    restoreAct = new QAction("Restore Window", this);
+    restoreAct = new QAction(tr("恢复窗口"), this);
     connect(restoreAct, SIGNAL(triggered()), this, SLOT(showNormal()));
-    quitAct = new QAction("Quit Application", this);
+    quitAct = new QAction(tr("退出程序"), this);
     connect(quitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
     pContextMenu = new QMenu(this);
     pContextMenu->addAction(minimumAct);
@@ -356,7 +359,7 @@ void  Widget::hideEvent(QHideEvent* event)
     if(systemTray->isVisible())
     {
         hide();
-        systemTray->showMessage("Tips", "The program is running behind!");
+        systemTray->showMessage("提示", "程序正在后台运行!");
         event->ignore();
     }
 }

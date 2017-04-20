@@ -1,6 +1,7 @@
 ﻿#include "widget.h"
 #include <QApplication>
 #include <QMutex>
+
 #include <QDateTime>
 
 void outputMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
@@ -52,9 +53,11 @@ int main(int argc, char *argv[])
 
     Widget w;
 
+
+
     w.setWindowFlags(w.windowFlags() & ~Qt::WindowMaximizeButtonHint);
-    //w.setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
-    w.setWindowState(Qt::WindowMinimized);
+    //    w.setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
+    //    w.setWindowState(Qt::WindowMinimized);
     w.show();
 
     return a.exec();

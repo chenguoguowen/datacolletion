@@ -46,3 +46,11 @@ RESOURCES += \
     datacolletion.qrc
 
 LIBS +=User32.LIB
+
+DISTFILES += \
+    icon.rc
+
+RC_FILE = \
+  icon.rc
+
+

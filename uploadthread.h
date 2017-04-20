@@ -1,4 +1,4 @@
-#ifndef UPLOADTHREAD_H
+﻿#ifndef UPLOADTHREAD_H
 #define UPLOADTHREAD_H
 
 #include <QThread>
