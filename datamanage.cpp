@@ -157,13 +157,13 @@ QStringList dataManage::selectAllData(QString str)
         qDebug()<<dataBase.lastError();
         qDebug()<<"Select all data faile!";
     }
-
-    sql_query.next();
-
     QStringList list;
-    for(int i = 0;i < 102;i++)
+    if(sql_query.next())
     {
-        list.append(sql_query.value(i).toString());
+        for(int i = 0;i < 102;i++)
+        {
+            list.append(sql_query.value(i).toString());
+        }
     }
 
     lock.unlock();

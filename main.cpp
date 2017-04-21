@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     //注册MessageHandler
-    qInstallMessageHandler(outputMessage);
+//    qInstallMessageHandler(outputMessage);
 
 
     Widget w;

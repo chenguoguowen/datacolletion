@@ -52,6 +52,7 @@ public:
     QTimer timer_connect;
     bool flag;
     QString AddrStr;
+    QString file_type;
     std::vector<std::pair<QString, QString>> Addrs;
 
 private:

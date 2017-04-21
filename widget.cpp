@@ -54,10 +54,15 @@ Widget::Widget(QWidget *parent) :
 
     user_name = settings.value("OPTION/USER_NAME").toString();
 
+    file_type = settings.value("OPTION/FILE_TYPE").toString();
+
     FT = NULL;
     uploadThread = NULL;
     tcpSocket =  new QTcpSocket(this);
     flag = false;
+
+
+    ui->lineEdit_5->setText(IP);
 
 }
 
@@ -197,7 +202,7 @@ void Widget::setStart()
         {
             delete FT;
         }
-        FT = new fileTable(lRow,lRank,filterWord,keyWord,&dataDB, path,setTime);
+        FT = new fileTable(lRow,lRank,filterWord,keyWord,&dataDB, path,setTime, file_type);
         FT->start();
     }
     else

@@ -39,7 +39,7 @@ void UpLoadThread::run()
         list.clear();
         list = db->selectAllData("select * from  dataTable  limit  1  offset  0;");
 
-        if(list[1].isEmpty() && list[2].isEmpty())
+        if(list.size() < 1)
         {
 
             qDebug()<<"No data,wait!";
@@ -61,7 +61,7 @@ void UpLoadThread::run()
                 {
                     if(times < 3)
                     {
-                        msleep((times + 3) * 100);
+                        msleep((times + 3) * 1000);
                         times++;
                     }
                     else
@@ -94,11 +94,12 @@ void UpLoadThread::readyRead()
     static char recvBuffer[1024] = {0};
     Header_Upload* head;
     memcpy_s(recvBuffer + rec_len, sizeof(recvBuffer), qba.begin(), qba.length());
-
+    qDebug() << "read data";
     rec_len += qba.length();
     if(rec_len >= sizeof(Header_Upload))
     {
         head = (Header_Upload*)recvBuffer;
+        qDebug() << "read data:" << head->fun_code;
         if(rec_len >= head->length)
         {
             rec_len = 0;
@@ -178,6 +179,7 @@ void UpLoadThread::readyRead()
                     login_usr();
                     break;
                 default:
+                    qDebug() << "error";
                     break;
                 }
 
@@ -224,7 +226,7 @@ void UpLoadThread::start_tran()
     head->unit_tags = 0;
 
     index = 1;             //防止程序中途跳过delete步骤
-    
+    qDebug() << "start_tran";
     pTcpSocket->write(sendBuffer,head->length);
 }
 
@@ -244,10 +246,11 @@ void UpLoadThread::delete_data()
 void UpLoadThread::send_data()
 {    
     // time = QDateTime::currentDateTime();
+    qDebug() << "send_data";
 
     uint addr = 0;
 //    int a = list.length();
-    if(index == list.length())
+    if(index == (*Addrs).size())
     {
         index=1;
         emit commit_sig();
@@ -255,7 +258,7 @@ void UpLoadThread::send_data()
     }
 
 
-    if(!list[index].isEmpty())
+    if(index < list.size())
     {
         char sendBuffer[1024];
         Header_Upload* head = (Header_Upload*)sendBuffer;
@@ -263,16 +266,23 @@ void UpLoadThread::send_data()
         head->protocol_tags = 0x20;
         head->fun_code = 0x42;
         //qDebug()<< (*Addrs)[index].first;
-        head->length = 8 + 4 + list[index].length(); //头长度8+用户名3，加逗号1，加数据长度
+        int len = 0;
+        if(!list[index].isEmpty())
+        {
+            len = list[index].length();
+        }
+        head->length = 8 + 4 + len; //头长度8+用户名3，加逗号1，加数据长度
         head->unit_tags = 0;
         addr = (*Addrs)[index-1].second.toUInt();
-        //qDebug()<<index;
-        //qDebug()<<query->value((*Addrs)[index].first).toString().toLatin1().data();
-        QByteArray aa = list[index].toLatin1();
+        qDebug()<<index;
+        qDebug()<<(*Addrs)[index - 1].second;
+
+        QByteArray aa = list[index - 1].toLatin1();
         char* a = aa.data();
         memcpy(&sendBuffer[8], &addr, 4);
-        memcpy(&sendBuffer[12], a , list[index].length());
+        memcpy(&sendBuffer[12], a , len);
         pTcpSocket->write(sendBuffer,head->length);
+        qDebug() << "Send index "<< index << "state " << state;
     }
     else if(list[index].isEmpty() && index > 1)
     {
@@ -286,7 +296,7 @@ void UpLoadThread::send_data()
 void UpLoadThread::commit_tran()
 {
     time = QDateTime::currentDateTime();
-qDebug()<<"commit_tran"<<time.toString("hh:mm:ss.zzz ");
+    qDebug()<<"commit_tran"<<time.toString("hh:mm:ss.zzz ");
     char sendBuffer[1024];
     Header_Upload* head = (Header_Upload*) sendBuffer;
     head->work_tags = work_tags++;
@@ -312,6 +322,7 @@ void UpLoadThread::keepAlive()
         head->unit_tags = 0;
         sendBuffer[8] = 0x01;
         sendBuffer[9] = 0x00;
+        qDebug() << "Send keepAlive()";
 
         pTcpSocket->write(sendBuffer,head->length);
     }
